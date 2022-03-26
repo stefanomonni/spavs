@@ -135,7 +135,7 @@ starting_config_data=function(X, Y, params, tchains){
  }
  
  kwss <- sapply(ktry, function(k)  
-       kmeans(tY, k, iter.max = 150, nstart=20)$tot.withinss)
+       suppressWarnings(kmeans(tY, k, iter.max = 150, nstart=20))$tot.withinss)
  
  relD <- sapply(2:length(kwss), function(i) 
     round(-(kwss[i]-kwss[i-1])/kwss[i], 2))
@@ -143,7 +143,7 @@ starting_config_data=function(X, Y, params, tchains){
  ksel = ktry[max(which(relD/sum(relD)>0.1))]
   
   # fit cluster 
- kclu <- kmeans(tY, ksel, iter.max = 150, nstart=20)$cluster
+ kclu <- suppressWarnings(kmeans(tY, ksel, iter.max = 150, nstart=20))$cluster
  Yalloc <- sapply(1:ksel, function(k) which(kclu==k))
   
   # association with X
